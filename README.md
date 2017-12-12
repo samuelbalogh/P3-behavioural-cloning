@@ -5,9 +5,6 @@
 Overview
 ---
 
-
-The README thoroughly discusses the approach taken for deriving and designing a model architecture fit for solving the given problem.
-
 The goals of this project were the following:
 * Use the simulator to collect data of good driving behavior
 * Design, train and validate a model that predicts a steering angle from image data
@@ -58,7 +55,12 @@ To have a reasonable time/accuracy ration, and since I did not have access to a 
 For quite a long time I had trouble getting the car to drive autonomously, even though I had trained my model extensively. It had a validation loss of `0.0033`, but the car would just hit the curb and not follow the road. Since the training supposedly went well, and validation loss was very low, I figured it has to be some basic difference between the images I used for training and the images that are used for autonomous driving. After some research and Slack-channel exploration, it became suspicious that the training model and `drive.py` use different color channels: `BGR` and `RGB`, respectively. This would of course confuse the model as it '**sees**' totally different color during autonomous driving than during training. Switching the color channel of training images solved this issue.
 
 
+Sandy edges, dirt road? 
 
+
+---- 
+----
+---
 
 
 This repository contains starting files for the Behavioral Cloning Project.
