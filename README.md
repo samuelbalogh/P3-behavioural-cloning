@@ -4,6 +4,63 @@
 
 Overview
 ---
+
+
+The README thoroughly discusses the approach taken for deriving and designing a model architecture fit for solving the given problem.
+
+The goals of this project were the following:
+* Use the simulator to collect data of good driving behavior
+* Design, train and validate a model that predicts a steering angle from image data
+* Use the model to drive the vehicle autonomously around the first track in the simulator
+* Summarize the results in this written report
+
+## My approach to the project
+
+At first, I wanted to manually discover the tracks that are present in the simulator. I drove around the two tracks and noticed the following:
+
+- the **first** track is, in terms of driving difficulty, fairly basic: there are no very sharp turns and no steep ascents or descents. Regarding the visuals, this track is well-lit and the road boundaries are clear. One of the difficulites may be that there are no lane lines.
+- the **second** track is far more challanging, with sharp turns, steep hills, shadowy/dark areas. On of its advantages though is that there is a central line which divides the road. This might help drive the car autonomously as it can provide a high-level feature.
+
+Since I had trouble even driving the second track manually, I decided to tackle the first track in the beginning, and if it goes well, train for the second.
+
+### Collecting data
+
+#### Driving styles
+
+Udacity provided a good dataset to start with, so I started off from that - but I also added to it.
+For collecting data, first, I drove around the track three times very carefully, trying to drive as smoothly as I could. I recorded this as the basis of the training (`data` folder). Then, as it was suggested in the course, I recorded multiple attempts at '*correction driving*', when I pulled the car back to the center from the edge of the road. Then, as I was experiencing issues in autonomous mode around sandy corners (where there was no obvious curb), I started to collect more data around those areas (`curves _and_sandy_edges` folder) .
+
+
+#### Filtering and augmenting the dataset
+
+For augmenting the dataset, I flipped each image horizontally, and changed the sign of the corresponding steering angle.
+I decided to skip data points where the steering angle is 0 - this turned out to quicken the training.
+
+
+### Working on the model architecture
+
+Since I was sure that I wanted to crop the images so that they exclude the upper part (hills, trees, sky) and the lower part (hood of the car), I introduced a `2D cropping layer` at the beginning of the network. I then added a `normalizing Lambda layer` to normalize images.
+
+Then, at first, I started experimenting with a very basic architecture: just one `Flatten` and one `Dense` layer, using `mse` of measuring loss and an `Adamoptimizer`.
+It turned out to be usable, but not great. On the positive side, this was a very fast method of training, and since I have run out of AWS credits and I performed the training on my laptop, it was a great way of exploration.
+
+Then, I started to add more layers to the network.
+
+### The final architecture
+
+To have a reasonable time/accuracy ration, and since I did not have access to a GPU, I had to keep my model simple. I've opted for the following architecture in the end:
+
+- 2D cropping layer, with input dimension: 160, 320, 3
+-
+
+### Caveats of the autonomous driving
+
+For quite a long time I had trouble getting the car to drive autonomously, even though I had trained my model extensively. It had a validation loss of `0.0033`, but the car would just hit the curb and not follow the road. Since the training supposedly went well, and validation loss was very low, I figured it has to be some basic difference between the images I used for training and the images that are used for autonomous driving. After some research and Slack-channel exploration, it became suspicious that the training model and `drive.py` use different color channels: `BGR` and `RGB`, respectively. This would of course confuse the model as it '**sees**' totally different color during autonomous driving than during training. Switching the color channel of training images solved this issue.
+
+
+
+
+
 This repository contains starting files for the Behavioral Cloning Project.
 
 In this project, you will use what you've learned about deep neural networks and convolutional neural networks to clone driving behavior. You will train, validate and test a model using Keras. The model will output a steering angle to an autonomous vehicle.
@@ -12,7 +69,7 @@ We have provided a simulator where you can steer a car around a track for data c
 
 We also want you to create a detailed writeup of the project. Check out the [writeup template](https://github.com/udacity/CarND-Behavioral-Cloning-P3/blob/master/writeup_template.md) for this project and use it as a starting point for creating your own writeup. The writeup can be either a markdown file or a pdf document.
 
-To meet specifications, the project will require submitting five files: 
+To meet specifications, the project will require submitting five files:
 * model.py (script used to create and train the model)
 * drive.py (script to drive the car - feel free to modify this file)
 * model.h5 (a trained Keras model)
@@ -25,14 +82,14 @@ Creating a Great Writeup
 ---
 A great writeup should include the [rubric points](https://review.udacity.com/#!/rubrics/432/view) as well as your description of how you addressed each point.  You should include a detailed description of the code used (with line-number references and code snippets where necessary), and links to other supporting documents or external references.  You should include images in your writeup to demonstrate how your code works with examples.  
 
-All that said, please be concise!  We're not looking for you to write a book here, just a brief description of how you passed each rubric point, and references to the relevant code :). 
+All that said, please be concise!  We're not looking for you to write a book here, just a brief description of how you passed each rubric point, and references to the relevant code :).
 
 You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup.
 
 The Project
 ---
 The goals / steps of this project are the following:
-* Use the simulator to collect data of good driving behavior 
+* Use the simulator to collect data of good driving behavior
 * Design, train and validate a model that predicts a steering angle from image data
 * Use the model to drive the vehicle autonomously around the first track in the simulator. The vehicle should remain on the road for an entire loop around the track.
 * Summarize the results with a written report
@@ -122,4 +179,3 @@ Will run the video at 48 FPS. The default FPS is 60.
 
 ## How to write a README
 A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
-
