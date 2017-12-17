@@ -27,11 +27,25 @@ Since I had trouble even driving the second track manually, I decided to tackle 
 Udacity provided a good dataset to start with, so I started off from that - but I also added to it.
 For collecting data, first, I drove around the track three times very carefully, trying to drive as smoothly as I could. I recorded this as the basis of the training. Then, as it was suggested in the course, I recorded multiple attempts at '*correction driving*', when I pulled the car back to the center from the edge of the road. Then, as I was experiencing issues in autonomous mode around sandy corners (where there was no obvious curb), I started to collect more data around those areas (`curves_and_sandy_edges` folder).
 
+The following two images represent two situations in which the position of the car is extreme, veering to the edge of the road, and the steering angle is large, to the opposite direction, so that the model learns that in these situations it should use a large angle to get back to the road.  
+
+![recovery](center_2017_12_13_17_48_24_998.jpg)
+
+![recovery2](center_2017_12_13_17_50_28_888.jpg)
+
+The following images describe the distribution of the steering angles in normal (smooth) driving session and in a `recovery`-driving style.
+
+![angles_](angles.png)
+
+![recovery_angles_](recovery_angles.png)
+
 
 #### 2. Filtering and augmenting the dataset
 
 For augmenting the dataset, I flipped each image horizontally, and changed the sign of the corresponding steering angle.
-I decided to skip data points where the steering angle is 0 as I thought this to be not so relevant information - this turned out to quicken the training.
+I decided to skip data points where the steering angle is `0` as I thought this to be not so relevant information - this turned out to quicken the training.
+
+
 
 - I also found that resizing the images improves the speed of the training quite a lot - I resized images by a factor of `.5` in bulk, meaning that my model did not have to do it on the fly. This meant though that I had to modify `drive.py` so that it produces the resized image size - this can be seen in `drive_resized.py`.
 
