@@ -52,7 +52,13 @@ I decided to skip data points where the steering angle is `0` as I thought this 
 
 ### Working on the model architecture
 
-Since I was sure that I wanted to crop the images so that they exclude the upper part (hills, trees, sky) and the lower part (hood of the car), I introduced a `2D cropping layer` at the beginning of the network. I then added a `normalizing Lambda layer` to normalize images.
+Since I was sure that I wanted to crop the images so that they exclude the upper part (hills, trees, sky) and the lower part (hood of the car), I introduced a `2D cropping layer` at the beginning of the network.
+
+A cropped image can be seen below - as one can see, this is still not ideal as there are some irrelevant features in it (signs, poles, etc):
+
+![cropped_img](imgs/center_2017_12_04_20_07_15_134.jpg)
+
+I then added a `normalizing Lambda layer` to normalize images.
 
 Then, at first, I started experimenting with a very basic architecture: just one `Flatten` and one `Dense` layer, using `mse` of measuring loss and an `Adamoptimizer`.
 It turned out to be usable, but not great. On the positive side, this was a very fast method of training, and since I have run out of AWS credits and I performed the training on my laptop, it was a great way of exploration.
@@ -108,6 +114,11 @@ I then found out that it is very important to teach the model how `not` to drive
 
 ### Conclusion
 
-The model used could benefit from some more training data and more layers.
+1. The model used could benefit from
 
-It would be ideal if I could use a high-end GPU for training the model.
+- more training data and
+- more layers
+
+2. It would be ideal if I could use a high-end GPU for training the model.
+
+3. Further preprocessing of the images would be good to have. One could have a region mask that only contains the road, and cuts out any noise besides it.
