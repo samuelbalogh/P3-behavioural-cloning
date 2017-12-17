@@ -31,11 +31,11 @@ The following two images represent two situations in which the position of the c
 
 ![recovery](center_2017_12_13_17_48_24_998.jpg)
 
-![recovery2](center_2017_12_13_17_50_28_888.jpg)
+![recovery2](center_2017_12_13_17_51_34_319.jpg)
 
 The following images describe the distribution of the steering angles in normal (smooth) driving session and in a `recovery`-driving style.
 
-![angles_](angles.png)
+![angles_](angles_.png)
 
 ![recovery_angles_](recovery_angles.png)
 
