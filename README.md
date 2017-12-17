@@ -29,15 +29,15 @@ For collecting data, first, I drove around the track three times very carefully,
 
 The following two images represent two situations in which the position of the car is extreme, veering to the edge of the road, and the steering angle is large, to the opposite direction, so that the model learns that in these situations it should use a large angle to get back to the road.  
 
-![recovery](center_2017_12_13_17_48_24_998.jpg)
+![recovery](imgs/center_2017_12_13_17_48_24_998.jpg)
 
-![recovery2](center_2017_12_13_17_51_34_319.jpg)
+![recovery2](imgs/center_2017_12_13_17_51_34_319.jpg)
 
 The following images describe the distribution of the steering angles in normal (smooth) driving session and in a `recovery`-driving style.
 
-![angles_](angles_.png)
+![angles_](imgs/angles_.png)
 
-![recovery_angles_](recovery_angles.png)
+![recovery_angles_](imgs/recovery_angles.png)
 
 
 #### 2. Filtering and augmenting the dataset
